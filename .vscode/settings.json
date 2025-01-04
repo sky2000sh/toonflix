@@ -1,0 +1,8 @@
+{
+    "dart.sdkPath": "D:\\Development_Study\\Dart&Flutter\\dart-sdk",
+
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+
+}

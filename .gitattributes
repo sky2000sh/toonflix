@@ -1,0 +1,5 @@
+*.cc filter=lfs diff=lfs merge=lfs -text
+*.h filter=lfs diff=lfs merge=lfs -text
+*.cmake filter=lfs diff=lfs merge=lfs -text
+*.swift filter=lfs diff=lfs merge=lfs -text
+*.lock filter=lfs diff=lfs merge=lfs -text
