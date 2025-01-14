@@ -1,6 +1,8 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:toonflix/screens/home_screen.dart';
+import 'package:toonflix/screens/home_screen1.dart';
+import 'package:toonflix/screens/toonflix_home_screen.dart';
+import 'package:toonflix/services/api_service.dart';
 import 'package:toonflix/widgets/Button.dart';
 import 'package:toonflix/widgets/currency_card.dart';
 
@@ -11,6 +13,7 @@ class Player {
 }
 
 void main() {
+  ApiService().getTodaysToons();
   runApp(const App());
 }
 
@@ -277,22 +280,34 @@ void main() {
 //   }
 
 // 20250109
+// class App extends StatelessWidget {
+//   const App({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData(
+//           scaffoldBackgroundColor: const Color(0xFFF7626C),
+//           textTheme: const TextTheme(
+//             // headlineLarge
+//             displayLarge: TextStyle(
+//               color: Color(0xFF232B55),
+//             ),
+//           ),
+//           cardColor: const Color(0xFFF4EDDB)),
+//       home: const HomeScreen1(),
+//     );
+//   }
+// }
+
+// 20250114
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          scaffoldBackgroundColor: const Color(0xFFF7626C),
-          textTheme: const TextTheme(
-            // headlineLarge
-            displayLarge: TextStyle(
-              color: Color(0xFF232B55),
-            ),
-          ),
-          cardColor: const Color(0xFFF4EDDB)),
-      home: const HomeScreen(),
+    return const MaterialApp(
+      home: ToonflixHomeScreen(),
     );
   }
 }
