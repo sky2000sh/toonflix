@@ -13,7 +13,7 @@ class Player {
 }
 
 void main() {
-  ApiService().getTodaysToons();
+  //ApiService().getTodaysToons();
   runApp(const App());
 }
 
@@ -306,7 +306,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: ToonflixHomeScreen(),
     );
   }
