@@ -310,4 +310,9 @@ class App extends StatelessWidget {
       home: ToonflixHomeScreen(),
     );
   }
+  // 웹툰 이미지가 [object ProgressEvent]라고 뜨는 경우 :
+  //   async 옆에 window.flutterWebRenderer="html";
+  //   작성 후, 터미널에서
+  //   flutter run -d chrome --web-renderer html
+  //   명령어 입력 후 실행하면 이미지가 뜸_250116
 }
