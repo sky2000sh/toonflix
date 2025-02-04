@@ -3,6 +3,7 @@ import 'package:toonflix/models/webtoon_detail_model.dart';
 import 'package:toonflix/services/api_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
 
 import '../models/webtoon_episode_model.dart';
 import '../widgets/episode_widget.dart';
@@ -24,12 +25,44 @@ class DetailScreeen extends StatefulWidget {
 class _DetailScreeenState extends State<DetailScreeen> {
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences prefs;
+  bool isLiked = false;
+
+  Future initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList('likedToons');
+    if (likedToons != null) {
+      if (likedToons.contains(widget.id) == true) {
+        setState(() {
+          isLiked = true;
+        });
+      }
+    } else {
+      await prefs.setStringList('likedToons', likedToons);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     webtoon = ApiService.getToonById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
+    initPrefs();
+  }
+
+  onHeartTap() async {
+    final likedToons = prefs.getStringList('likedToons');
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+    }
+    await prefs.setStringList('likedToons', likedToons);
+    setState(() {
+      isLiked = !isLiked;
+    });
   }
 
   @override
@@ -47,6 +80,14 @@ class _DetailScreeenState extends State<DetailScreeen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
         elevation: 2,
+        actions: [
+          IconButton(
+            onPressed: onHeartTap,
+            icon: const Icon(
+              Icons.favorite_outline_outlined,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -118,6 +159,7 @@ class _DetailScreeenState extends State<DetailScreeen> {
                         for (var episode in snapshot.data!)
                           Episode(
                             episode: episode,
+                            webtoonId: widget.id,
                           )
                       ],
                     );
@@ -131,4 +173,12 @@ class _DetailScreeenState extends State<DetailScreeen> {
       ),
     );
   }
+}
+
+class SharedPreferences {
+  static getInstance() {}
+
+  getStringList(String s) {}
+
+  setStringList(String s, likedToons) {}
 }
